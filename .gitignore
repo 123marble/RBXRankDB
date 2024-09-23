@@ -1,0 +1,11 @@
+# Project place file
+/RBXRankDB.rbxlx
+
+# Roblox Studio lock files
+/*.rbxlx.lock
+/*.rbxl.lock
+
+/build
+
+/wally.lock
+/Packages

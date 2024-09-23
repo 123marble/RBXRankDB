@@ -1,0 +1,20 @@
+{
+    "name": "RBXRankDB",
+    "tree": {
+      "$className": "DataModel",
+      "ServerScriptService": {
+        "rbxRankDB": {
+          "$path": "Packages",
+          "rbxRankDB" : {
+            "$path": "src/rbxRankDB"
+          },
+          "Tests" : {
+            "$path": "src/tests"
+          }
+        },
+        "TestRunner": {
+          "$path": "testRunner.server.lua"
+        }
+      }
+    }
+  }
