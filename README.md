@@ -13,7 +13,14 @@ A limitation of ROBLOX's Ordered Datastore is that it [does not support the retr
 ## How do I run the unit tests?
 Testing requires Wally, Rojo, and Roblox Studio.
 1. Ensure RankDB server is running
-2. Install packages with `wally install`
-3. Sync `rojo` with `dev.project.json`
-4. Run the Roblox Studio place
-5. Check output window for test status
+2. Add secrets.lua to the project root containing the following so that the tests can authenticate:
+```
+return {
+    url = "<host_url>",
+    token = "<jwt_token>"
+}
+```
+3. Install packages with `wally install`
+4. Sync `rojo` with `dev.project.json`
+5. Run the Roblox Studio place
+6. Check output window for test status
