@@ -12,7 +12,7 @@ onBrokenMarkdownLinks = "warn"
 
 # From git:
 organizationName = "123marble"
-projectName = "RankStore"
+projectName = "RBXRankDB"
 url = "https://123marble.github.io"
 baseUrl = "/RBXRankDB"
 tagline = "RBX Client for RankDB"
