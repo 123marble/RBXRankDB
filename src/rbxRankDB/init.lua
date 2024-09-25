@@ -3,6 +3,10 @@ local HttpService = game:GetService("HttpService")
 local RankDBClient = {}
 RankDBClient.__index = RankDBClient
 
+--- @class RankDBClient
+
+--- @type getElementResult {id: number, score: number, tieBreaker: number, rank: number, extra: {}}
+--- @within RankDBClient
 export type getElementResult = {
     id : number,
     score : number,
@@ -11,6 +15,8 @@ export type getElementResult = {
     extra : {}
 }
 
+--- @type updateElementResult {id: number, prevRank: number, newRank: number, prevScore: number, newScore: number, shiftedBoundaries: {shiftedBoundary}}
+--- @within RankDBClient
 export type updateElementResult = {
     id : number,
     prevRank : number,
@@ -20,12 +26,20 @@ export type updateElementResult = {
     shiftedBoundaries : {shiftedBoundary}
 }
 
+--- @type shiftedBoundary {id: number, prevRank: number, newRank: number}
+--- @within RankDBClient
 export type shiftedBoundary = {
     id : number,
     prevRank : number,
     newRank : number
 }
 
+--[=[
+Creates a new RankDBClient instance.
+@param baseUrl string -- The base URL of the RankDB API
+@param jwtToken string? -- Optional JWT token for authentication
+@return RankDBClient -- A new RankDBClient instance
+]=]
 function RankDBClient.new(baseUrl : string, jwtToken : string?)
     local self = setmetatable({}, RankDBClient)
     self.baseUrl = baseUrl
@@ -34,6 +48,13 @@ function RankDBClient.new(baseUrl : string, jwtToken : string?)
     return self
 end
 
+--[=[
+Sends a request to the RankDB API.
+@param method string -- The HTTP method to use
+@param endpoint string -- The API endpoint
+@param body table? -- Optional request body
+@return table -- The response from the API
+]=]
 function RankDBClient:request(method, endpoint, body)
     local url = self.baseUrl .. endpoint
     local headers = {
@@ -66,6 +87,15 @@ function RankDBClient:request(method, endpoint, body)
     end
 end
 
+--[=[
+Creates a new list in the RankDB.
+@param listId string -- The ID of the list to create
+@param set string? -- The set to use (default: "default")
+@param mergeSize number? -- The merge size (default: 500)
+@param splitSize number? -- The split size (default: 2000)
+@param replace boolean? -- Whether to replace an existing list (default: false)
+@return boolean -- True if the list was created, false if it already exists
+]=]
 function RankDBClient:createList(
     listId : string,
     set : string?,
@@ -100,16 +130,31 @@ function RankDBClient:createList(
     end
 end
 
+--[=[
+Gets the length of a list.
+@param listId string -- The ID of the list
+@return number -- The number of elements in the list
+]=]
 function RankDBClient:getListLength(listId : string) : number
     local result = self:request("GET", "/lists/" .. listId)
     return tonumber(result.elements)
 end
 
--- Returns true if the list was deleted. If list was not found, returns false.
+--[=[
+Deletes a list from the RankDB.
+@param listId string -- The ID of the list to delete
+@return boolean -- True if the list was deleted, false if it was not found
+]=]
 function RankDBClient:deleteList(listId : string)
     return self:request("DELETE", "/lists/" .. listId) and true or false
 end
 
+--[=[
+Gets an element from a list.
+@param listId string -- The ID of the list
+@param elementId number -- The ID of the element
+@return getElementResult -- The element data
+]=]
 function RankDBClient:getElement(listId : string, elementId : number) : getElementResult
     local range = 0 -- todo: make this a parameter
     local query = "?range=" .. tostring(range)
@@ -123,6 +168,15 @@ function RankDBClient:getElement(listId : string, elementId : number) : getEleme
     }
 end
 
+--[=[
+Updates an element in a list.
+@param listId string -- The ID of the list
+@param elementId number -- The ID of the element to update
+@param score number -- The new score for the element
+@param tieBreaker number? -- Optional tiebreaker value
+@param extra table -- Additional data to store with the element
+@return updateElementResult -- The result of the update operation
+]=]
 function RankDBClient:updateElement(
     listId : string,
     elementId : number,
@@ -171,6 +225,12 @@ function RankDBClient:updateElement(
     }
 end
 
+--[=[
+Deletes an element from a list.
+@param listId string -- The ID of the list
+@param elementId number -- The ID of the element to delete
+@return boolean -- True if the element was deleted, false otherwise
+]=]
 function RankDBClient:deleteElement(listId : string, elementId : number)
     return self:request("DELETE", "/lists/" .. listId .. "/elements/" .. tostring(elementId))
 end
