@@ -4,35 +4,44 @@ local RankDBClient = {}
 RankDBClient.__index = RankDBClient
 
 export type getElementResult = {
-    listId : string,
     id : number,
     score : number,
     tieBreaker : number,
     rank : number,
-    extra : string
+    extra : {}
 }
 
 export type updateElementResult = {
+    id : number,
     prevRank : number,
     newRank : number,
     prevScore : number,
-    newScore : number
+    newScore : number,
+    shiftedBoundaries : {shiftedBoundary}
 }
 
-function RankDBClient.new(baseUrl, jwtToken, ascending : boolean)
+export type shiftedBoundary = {
+    id : number,
+    prevRank : number,
+    newRank : number
+}
+
+function RankDBClient.new(baseUrl : string, jwtToken : string?)
     local self = setmetatable({}, RankDBClient)
     self.baseUrl = baseUrl
     self.jwtToken = jwtToken
-    self.ascending = ascending
+    self.ascending = false -- todo: hardcoded for now because shiftedBoundaries does not work with descending. This should be parameterised in future.
     return self
 end
 
 function RankDBClient:request(method, endpoint, body)
     local url = self.baseUrl .. endpoint
     local headers = {
-        ["Authorization"] = "Bearer " .. self.jwtToken,
         ["Content-Type"] = "application/json"
     }
+    if self.jwtToken then
+        headers["Authorization"] = "Bearer " .. self.jwtToken
+    end
     
     local success, response = pcall(function()
         return HttpService:RequestAsync({
@@ -48,19 +57,32 @@ function RankDBClient:request(method, endpoint, body)
     end
     
     if response.Success then
+        if response.Body == "" then
+            return nil
+        end
         return HttpService:JSONDecode(response.Body)
     else
-        error("HTTP Error: " .. response.StatusCode)
+        error("HTTP Error: " .. response.StatusCode .. " " .. response.Body)
     end
 end
 
-function RankDBClient:createList(listId : string, set : string, mergeSize : number, splitSize : number, replace : boolean) : boolean
+function RankDBClient:createList(
+    listId : string,
+    set : string?,
+    mergeSize : number?,
+    splitSize : number?,
+    replace : boolean?
+) : boolean
+    set = set or "default"
+    mergeSize = mergeSize or 500
+    splitSize = splitSize or 2000
+    replace = replace or false
     local listData = {
         id = listId,
         set = set,
-        merge_size = tostring(mergeSize) or "500",
-        split_size = tostring(splitSize) or "2000",
-        load_index = "true"
+        merge_size = mergeSize,
+        split_size = splitSize,
+        load_index = false
     }
     local query = replace and "?replace=true" or "?replace=false"
     local success, result = pcall(function()
@@ -83,82 +105,74 @@ function RankDBClient:getListLength(listId : string) : number
     return tonumber(result.elements)
 end
 
+-- Returns true if the list was deleted. If list was not found, returns false.
 function RankDBClient:deleteList(listId : string)
-    return self:request("DELETE", "/lists/" .. listId)
+    return self:request("DELETE", "/lists/" .. listId) and true or false
 end
 
-function RankDBClient:getElement(listId : string, elementId : string, range : number) : getElementResult
-    range = range or 0
+function RankDBClient:getElement(listId : string, elementId : number) : getElementResult
+    local range = 0 -- todo: make this a parameter
     local query = "?range=" .. tostring(range)
-    local result = self:request("GET", "/lists/" .. listId .. "/elements/" .. elementId .. query)
+    local result = self:request("GET", "/lists/" .. listId .. "/elements/" .. tostring(elementId) .. query)
     return {
-        listId = result.list_id,
         id = result.id,
         score = tonumber(result.score),
         tieBreaker = tonumber(result.tie_breaker),
         extra = result.payload,
-        rank = self.ascending and result.from_bottom or result.from_top
+        rank = (self.ascending and result.from_bottom or result.from_top) + 1
     }
 end
 
-function RankDBClient:updateElement(listId : string, elementId : string, score : number, tieBreaker : number, range : number, extra : string) : updateElementResult
+function RankDBClient:updateElement(
+    listId : string,
+    elementId : number,
+    score : number,
+    tieBreaker : number?,
+    extra : {}
+) : updateElementResult
+    tieBreaker = tieBreaker or 0
     local elementData = {
-        score = tostring(score),
-        tie_breaker = tostring(tieBreaker),
+        id = elementId,
+        score = score,
+        tie_breaker = tieBreaker or nil,
         payload = extra
     }
-    range = range or 0
+    local range = 0
     local query = "?range=" .. tostring(range)
     
-    local result = self:request("PUT", "/lists/" .. listId .. "/elements/" .. elementId .. query, elementData)
+    local result = self:request("PUT", "/lists/" .. listId .. "/elements/" .. tostring(elementId) .. query, elementData)
+
+    local shiftedBoundaries = {}
+    if result.shifted_boundaries then
+        for _, boundary in ipairs(result.shifted_boundaries) do
+            table.insert(shiftedBoundaries, {
+                id = boundary.id,
+                prevRank = tonumber(boundary.prev_from_top) + 1, -- todo: shifted boundaries only works with descending
+                newRank = tonumber(boundary.new_from_top) + 1,     -- should update rankDB to return correct from_bottom as well in future.
+                prevScore = tonumber(boundary.prev_score),
+                newScore = tonumber(boundary.new_score)
+            })
+        end
+    end
+
+    local prevRank, prevScore
+    if result.previous_rank then
+        prevRank = (self.ascending and result.previous_rank.from_bottom or result.previous_rank.from_top) + 1
+        prevScore = tonumber(result.previous_rank.score)
+    end
+
     return {
-        prevRank = self.ascending and result.previous_rank.from_bottom or result.previous_rank.from_top,
-        newRank = self.ascending and result.from_bottom or result.from_top,
-        prevScore = tonumber(result.previous_rank.score),
-        newScore = tonumber(result.score)
+        id = result.id,
+        prevRank = prevRank,
+        newRank = (self.ascending and result.from_bottom or result.from_top) + 1,
+        prevScore = prevScore,
+        newScore = tonumber(result.score),
+        shiftedBoundaries = #shiftedBoundaries > 0 and shiftedBoundaries or nil
     }
 end
 
-function RankDBClient:deleteElement(listId : string, elementId : string)
-    return self:request("DELETE", "/lists/" .. listId .. "/elements/" .. elementId)
-end
-
-function RankDBClient:getElementFromLists(elementId : string, lists : {string}, allInSets : {string}, matchMetadata : {[string]: string}) : {getElementResult}
-    local queryParams = "?"
-    if lists then
-        for _, listId in ipairs(lists) do
-            queryParams = queryParams .. "lists=" .. listId .. "&"
-        end
-    end
-    if matchMetadata then
-        local metadata = HttpService:JSONEncode(matchMetadata)
-        queryParams = queryParams .. "match_metadata=" .. HttpService:UrlEncode(metadata) .. "&"
-    end
-    if allInSets then
-        for _, setName in ipairs(allInSets) do
-            queryParams = queryParams .. "all_in_sets=" .. setName .. "&"
-        end
-    end
-    local endpoint = "/xlist/elements/" .. elementId .. queryParams
-    local result = self:request("GET", endpoint)
-    
-    local elements = {}
-    for _, element in ipairs(result.success) do
-        if element.results then
-            local result = element.results[1]
-            table.insert(elements, {
-                listId = result.list_id,
-                id = result.id,
-                score = tonumber(result.score),
-                tieBreaker = tonumber(result.tie_breaker),
-                extra = result.payload,
-                rank = self.ascending and result.from_bottom or result.from_top
-            })
-        end
-
-    end
-    
-    return elements
+function RankDBClient:deleteElement(listId : string, elementId : number)
+    return self:request("DELETE", "/lists/" .. listId .. "/elements/" .. tostring(elementId))
 end
 
 return RankDBClient

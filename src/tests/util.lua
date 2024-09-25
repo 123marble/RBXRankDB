@@ -49,4 +49,16 @@ function Util.DeepEqual(table1 : {}, table2 : {})
     return recurse(table1, table2)
  end
 
-return Util
+ function Util.GetExpectationExtensions()
+   return {
+       deepEqual = function(receivedValue, expectedValue)
+           local pass = Util.DeepEqual(receivedValue, expectedValue)
+           return {
+               pass = pass,
+               message = ("Expected %s to be deep equal to %s"):format(HttpService:JSONEncode(receivedValue), HttpService:JSONEncode(expectedValue))
+           }
+       end
+   }
+end
+
+ return Util
