@@ -53,10 +53,9 @@ export type shiftedBoundary = {
 export type element = {
     id : number,
     score : number,
-    tieBreaker : number,
+    tieBreaker : number?,
     extra : {}?
 }
-
 
 --[=[
 Creates a new RankDBClient instance.
@@ -279,6 +278,31 @@ Deletes an element from a list.
 ]=]
 function RankDBClient:deleteElement(listId : string, elementId : number)
     return self:request("DELETE", "/lists/" .. listId .. "/elements/" .. tostring(elementId))
+end
+
+--[=[
+Gets a range of elements from a list based on rank.
+@param listId string -- The ID of the list
+@param rank number -- The starting rank
+@param limit number -- The number of elements to retrieve
+@return {getElementResult} -- An array of elements in the specified range
+]=]
+function RankDBClient:getRankRange(listId: string, rank: number, limit: number): {getElementResult}
+    local query = string.format("?from_top=%d&limit=%d", rank, limit)
+    local result = self:request("GET", "/lists/" .. listId .. "/range" .. query)
+    
+    local elements = {}
+    for _, element in ipairs(result) do
+        table.insert(elements, {
+            id = element.id,
+            score = tonumber(element.score),
+            tieBreaker = tonumber(element.tie_breaker),
+            extra = element.payload,
+            rank = (self.ascending and element.from_bottom or element.from_top) + 1
+        })
+    end
+    
+    return elements
 end
 
 --[=[

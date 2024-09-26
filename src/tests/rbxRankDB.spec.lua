@@ -177,4 +177,20 @@ return function()
 
     end)
     
+    itFOCUS("should be able to get rank range", function()
+        local _ = client:updateElement(testListId, {id = 1, score = 10, tieBreaker = 0})
+        local _ = client:updateElement(testListId, {id = 2, score = 20, tieBreaker = 0})
+        local _ = client:updateElement(testListId, {id = 3, score = 30, tieBreaker = 0})
+        local _ = client:updateElement(testListId, {id = 4, score = 40, tieBreaker = 0})
+        local _ = client:updateElement(testListId, {id = 5, score = 50, tieBreaker = 0})
+
+        local result = client:getRankRange(testListId, 2, 4)
+        local expected = {
+            {id = 3, rank = 3, score = 30, tieBreaker = 0},
+            {id = 2, rank = 4, score = 20, tieBreaker = 0},
+            {id = 1, rank = 5, score = 10, tieBreaker = 0},
+        }
+        expect(result).to.be.deepEqual(expected)
+    end)
+    
 end
