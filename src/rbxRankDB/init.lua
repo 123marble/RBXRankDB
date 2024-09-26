@@ -15,6 +15,13 @@ export type getElementResult = {
     extra : {}
 }
 
+--- @type getMultiElementsResult {found: {getElementResult}, notFound: {number}}
+--- @within RankDBClient
+export type getMultiElementsResult = {
+    found : {getElementResult},
+    notFound : {number}
+}
+
 --- @type updateElementResult {id: number, prevRank: number, newRank: number, prevScore: number, newScore: number, shiftedBoundaries: {shiftedBoundary}}
 --- @within RankDBClient
 export type updateElementResult = {
@@ -26,6 +33,13 @@ export type updateElementResult = {
     shiftedBoundaries : {shiftedBoundary}
 }
 
+--- @type updateMultiElementsResult {found: {updateElementResult}, notFound: {number}}
+--- @within RankDBClient
+export type updateMultiElementsResult = {
+    found : {updateElementResult},
+    notFound : {number}
+}
+
 --- @type shiftedBoundary {id: number, prevRank: number, newRank: number}
 --- @within RankDBClient
 export type shiftedBoundary = {
@@ -33,6 +47,16 @@ export type shiftedBoundary = {
     prevRank : number,
     newRank : number
 }
+
+--- @type element {id: number, score: number, tieBreaker: number, extra: {}}?
+--- @within RankDBClient
+export type element = {
+    id : number,
+    score : number,
+    tieBreaker : number,
+    extra : {}?
+}
+
 
 --[=[
 Creates a new RankDBClient instance.
@@ -168,34 +192,134 @@ function RankDBClient:getElement(listId : string, elementId : number) : getEleme
     }
 end
 
+function RankDBClient:getMultiElements(listId : string, elementIds : {number}) : getMultiElementsResult
+    local result = self:request("POST", "/lists/" .. listId .. "/elements/find", {element_ids = elementIds})
+
+    local foundElements = {}
+    if result.found then
+        for _, element in ipairs(result.found) do
+            table.insert(foundElements, {
+                id = element.id,
+                score = tonumber(element.score),
+                tieBreaker = tonumber(element.tie_breaker),
+                extra = element.payload,
+                rank = (self.ascending and element.from_bottom or element.from_top) + 1
+            })
+        end
+    end
+
+    local notFoundElements = {}
+    if result.not_found then
+        for _, elementId in ipairs(result.not_found) do
+            table.insert(notFoundElements, elementId)
+        end
+    end
+
+    return {found = foundElements, notFound = notFoundElements}
+end
+
 --[=[
 Updates an element in a list.
 @param listId string -- The ID of the list
-@param elementId number -- The ID of the element to update
-@param score number -- The new score for the element
-@param tieBreaker number? -- Optional tiebreaker value
-@param extra table -- Additional data to store with the element
+@param element element -- The element to update
 @return updateElementResult -- The result of the update operation
 ]=]
 function RankDBClient:updateElement(
     listId : string,
-    elementId : number,
-    score : number,
-    tieBreaker : number?,
-    extra : {}
+    element : element
 ) : updateElementResult
-    tieBreaker = tieBreaker or 0
-    local elementData = {
-        id = elementId,
-        score = score,
-        tie_breaker = tieBreaker or nil,
-        payload = extra
-    }
+    local elementData = self:_constructElementBodyFromElement(element)
     local range = 0
     local query = "?range=" .. tostring(range)
-    
-    local result = self:request("PUT", "/lists/" .. listId .. "/elements/" .. tostring(elementId) .. query, elementData)
+    local result = self:request("PUT", "/lists/" .. listId .. "/elements/" .. tostring(element.id) .. query, elementData)
+    return self:_constructUpdateElementResult(result)
+end
 
+--[=[
+Updates multiple elements in a list.
+@param listId string -- The ID of the list
+@param elements {element} -- The elements to update
+@param results boolean? -- Whether to return the results of the update operation (default: true)
+@return {updateElementResult} -- The results of the update operation
+:::info
+This method does not return previous rank or score because the API does not support it.
+:::
+]=]
+function RankDBClient:updateMultiElements(listId : string, elements : {element}, results : boolean?) : updateMultiElementsResult
+    results = results or true
+    local elementData = {}
+    for _, element in ipairs(elements) do
+        table.insert(elementData, self:_constructElementBodyFromElement(element))
+    end
+
+    local query = results and "?results=true" or "?results=false"
+    local result = self:request("PUT", "/lists/" .. listId .. "/elements" .. query, elementData)
+    local foundResults = {}
+    if result.found then
+        for _, updatedElement in ipairs(result.found) do
+            table.insert(foundResults, self:_constructUpdateElementResult(updatedElement))
+        end
+    end
+
+    local notFoundResults = {}
+    if result.not_found then
+        for _, notFoundElement in ipairs(result.not_found) do
+            table.insert(notFoundResults, notFoundElement)
+        end
+    end
+
+    return {found = foundResults, notFound = notFoundResults}
+end
+
+--[=[
+Deletes an element from a list.
+@param listId string -- The ID of the list
+@param elementId number -- The ID of the element to delete
+@return boolean -- True if the element was deleted, false otherwise
+]=]
+function RankDBClient:deleteElement(listId : string, elementId : number)
+    return self:request("DELETE", "/lists/" .. listId .. "/elements/" .. tostring(elementId))
+end
+
+--[=[
+Constructs the element body for API requests from an element object.
+@param element element -- The element to construct the body from
+@return table -- The constructed element body
+]=]
+function RankDBClient:_constructElementBodyFromElement(element : element)
+    return {
+        id = element.id,
+        score = element.score,
+        tie_breaker = element.tieBreaker,
+        payload = element.extra
+    }
+end
+
+--[=[
+Constructs the update element result from the API response.
+@param result table -- The API response
+@return updateElementResult -- The constructed update element result
+]=]
+function RankDBClient:_constructUpdateElementResult(result: table): updateElementResult
+	local shiftedBoundaries = self:_getShiftedBoundariesFromResult(result)
+
+	local prevRank, prevScore
+	if result.previous_rank then
+		prevRank = (self.ascending and result.previous_rank.from_bottom or result.previous_rank.from_top) + 1
+		prevScore = tonumber(result.previous_rank.score)
+	end
+
+	return {
+		id = result.id,
+		prevRank = prevRank,
+		newRank = (self.ascending and result.from_bottom or result.from_top) + 1,
+		prevScore = prevScore,
+		newScore = tonumber(result.score),
+		shiftedBoundaries = #shiftedBoundaries > 0 and shiftedBoundaries or nil
+	}
+end
+
+function RankDBClient:_getShiftedBoundariesFromResult(result : table) : {shiftedBoundary}
     local shiftedBoundaries = {}
     if result.shifted_boundaries then
         for _, boundary in ipairs(result.shifted_boundaries) do
@@ -208,31 +332,7 @@ function RankDBClient:updateElement(
             })
         end
     end
-
-    local prevRank, prevScore
-    if result.previous_rank then
-        prevRank = (self.ascending and result.previous_rank.from_bottom or result.previous_rank.from_top) + 1
-        prevScore = tonumber(result.previous_rank.score)
-    end
-
-    return {
-        id = result.id,
-        prevRank = prevRank,
-        newRank = (self.ascending and result.from_bottom or result.from_top) + 1,
-        prevScore = prevScore,
-        newScore = tonumber(result.score),
-        shiftedBoundaries = #shiftedBoundaries > 0 and shiftedBoundaries or nil
-    }
-end
-
---[=[
-Deletes an element from a list.
-@param listId string -- The ID of the list
-@param elementId number -- The ID of the element to delete
-@return boolean -- True if the element was deleted, false otherwise
-]=]
-function RankDBClient:deleteElement(listId : string, elementId : number)
-    return self:request("DELETE", "/lists/" .. listId .. "/elements/" .. tostring(elementId))
+    return shiftedBoundaries
 end
 
 return RankDBClient

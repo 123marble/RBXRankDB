@@ -26,7 +26,7 @@ return function()
     end)
     
     it("should be able to add one element to list", function()
-        local result = client:updateElement(testListId, 1, 10, 0, nil)
+        local result = client:updateElement(testListId, {id = 1, score = 10, tieBreaker = 0})
         local expected = {
             id = 1,
             prevRank = nil,
@@ -38,8 +38,8 @@ return function()
     end)
 
     it("should be able to get element from list", function()
-        local _ = client:updateElement(testListId, 1, 10, 0, nil)
-        local result = client:getElement(testListId, 1, 0)
+        local _ = client:updateElement(testListId, {id = 1, score = 10, tieBreaker = 0})
+        local result = client:getElement(testListId, 1)
         local expected = {
             id = 1,
             rank = 1,
@@ -50,7 +50,7 @@ return function()
     end)
 
     it("should be able to add multiple elements to list", function()
-        local result = client:updateElement(testListId, 1, 10, 0, nil)
+        local result = client:updateElement(testListId, {id = 1, score = 10, tieBreaker = 0})
         local expected = {
             id = 1,
             prevRank = nil,
@@ -59,7 +59,8 @@ return function()
             newScore = 10,
         }
         expect(result).to.be.deepEqual(expected)
-        local result = client:updateElement(testListId, 2, 2, 0, nil)
+
+        local result = client:updateElement(testListId, {id = 2, score = 2, tieBreaker = 0})
         local expected = {
             id = 2,
             prevRank = nil,
@@ -69,7 +70,7 @@ return function()
         }
         expect(result).to.be.deepEqual(expected)
 
-        local result = client:updateElement(testListId, 3, 20, 0, nil)
+        local result = client:updateElement(testListId, {id = 3, score = 20, tieBreaker = 0})
         result.shiftedBoundaries = nil
         local expected = {
             id = 3,
@@ -82,21 +83,21 @@ return function()
     end)
 
     it("length should be correct after adding 1 element", function()
-        local _ = client:updateElement(testListId, 1, 10, 0, nil)
+        local _ = client:updateElement(testListId, {id = 1, score = 10, tieBreaker = 0})
         local length = client:getListLength(testListId)
         expect(length).to.be.equal(1)
     end)
 
     it("length should be correct after adding multiple elements", function()
-        local _ = client:updateElement(testListId, 1, 1, 0, nil)
-        local _ = client:updateElement(testListId, 2, 1, 0, nil)
-        local _ = client:updateElement(testListId, 3, 1, 0, nil)
+        local _ = client:updateElement(testListId, {id = 1, score = 1, tieBreaker = 0})
+        local _ = client:updateElement(testListId, {id = 2, score = 1, tieBreaker = 0})
+        local _ = client:updateElement(testListId, {id = 3, score = 1, tieBreaker = 0})
         local length = client:getListLength(testListId)
         expect(length).to.be.equal(3)
     end)
 
     it("should be able to update existing element", function()
-        local result = client:updateElement(testListId, 1, 10, 0, nil)
+        local result = client:updateElement(testListId, {id = 1, score = 10, tieBreaker = 0})
         local expected = {
             id = 1,
             prevRank = nil,
@@ -106,7 +107,7 @@ return function()
         }
         expect(result).to.be.deepEqual(expected)
 
-        local result = client:updateElement(testListId, 1, 1, 0, nil)
+        local result = client:updateElement(testListId, {id = 1, score = 1, tieBreaker = 0})
         local expected = {
             id = 1,
             prevRank = 1,
@@ -115,6 +116,65 @@ return function()
             newScore = 1,
         }
         expect(result).to.be.deepEqual(expected)
-    end)   
+    end)
+
+
+    it("should be able to update multiple elements in one request", function()
+        local elements = {
+            {id = 1, score = 10, tieBreaker = 0},
+            {id = 2, score = 20, tieBreaker = 0},
+            {id = 3, score = 30, tieBreaker = 0},
+        }
+        local results = client:updateMultiElements(testListId, elements, false)
+
+        local expectedResults = {
+            found = {
+                {
+                    id = 3,
+                    prevRank = nil,
+                    newRank = 1,
+                    prevScore = nil,
+                    newScore = 30,
+                },
+                {
+                    id = 2,
+                    prevRank = nil,
+                    newRank = 2,
+                    prevScore = nil,
+                    newScore = 20,
+                },
+                {
+                    id = 1,
+                    prevRank = nil,
+                    newRank = 3,
+                    prevScore = nil,
+                    newScore = 10,
+                },
+            },
+            notFound = {},
+        }
+
+        expect(results).to.be.deepEqual(expectedResults)
+    end)
+
+    it("should be able to get multiple elements in one request", function()
+        local _ = client:updateElement(testListId, {id = 1, score = 1, tieBreaker = 0})
+        local _ = client:updateElement(testListId, {id = 2, score = 2, tieBreaker = 0})
+        local _ = client:updateElement(testListId, {id = 3, score = 3, tieBreaker = 0})
+
+        local getResult = client:getMultiElements(testListId, {1,2,3,4})
+        local expectedResult = {
+            found = {
+                {id = 3, rank = 1, score = 3, tieBreaker = 0},
+                {id = 2, rank = 2, score = 2, tieBreaker = 0},
+                {id = 1, rank = 3, score = 1, tieBreaker = 0},
+            },
+            notFound = {
+                4
+            }
+        }
+        expect(getResult).to.be.deepEqual(expectedResult)
+
+    end)
     
 end
