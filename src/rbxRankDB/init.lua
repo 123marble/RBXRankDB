@@ -111,6 +111,22 @@ function RankDBClient:request(method, endpoint, body)
 end
 
 --[=[
+Retrieves all list IDs from the RankDB.
+@return {string} -- An array of list IDs
+]=]
+function RankDBClient:getAllListIds(limit : number?) : {string}
+    local query = limit and "?limit=" .. tostring(limit) or ""
+    local result = self:request("GET", "/lists" .. query)
+    local listIds = {}
+    
+    for _, list in ipairs(result.lists) do
+        table.insert(listIds, list.id)
+    end
+    
+    return listIds
+end
+
+--[=[
 Creates a new list in the RankDB.
 @param listId string -- The ID of the list to create
 @param set string? -- The set to use (default: "default")

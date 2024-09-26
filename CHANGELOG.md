@@ -1,5 +1,8 @@
 # CHANGELOG.md
 
+## 0.0.6 (2024-09-25)
+- Added `rbxRankDB:getAllListIds` method to get all list ids.
+
 ## 0.0.5 (2024-09-25)
 - Bug fix for `rbxRankDB:getRankRange` to return ranks greater than or equal to the specified rank instead of greater than.
 

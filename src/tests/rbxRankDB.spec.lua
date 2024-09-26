@@ -177,7 +177,7 @@ return function()
 
     end)
     
-    itFOCUS("should be able to get rank range", function()
+    it("should be able to get rank range", function()
         local _ = client:updateElement(testListId, {id = 1, score = 10, tieBreaker = 0})
         local _ = client:updateElement(testListId, {id = 2, score = 20, tieBreaker = 0})
         local _ = client:updateElement(testListId, {id = 3, score = 30, tieBreaker = 0})
@@ -192,6 +192,20 @@ return function()
             {id = 1, rank = 5, score = 10, tieBreaker = 0},
         }
         expect(result).to.be.deepEqual(expected)
+    end)
+
+    it("should be able to get all list ids", function()
+        local _ = client:deleteList("testList1")
+        local _ = client:deleteList("testList2")
+        local _ = client:createList("testList1")
+        local _ = client:createList("testList2")
+
+        local listIds = client:getAllListIds()
+        
+        expect(type(listIds)).to.be.equal("table")
+        expect(table.find(listIds, "testList1")).to.be.ok()
+        expect(table.find(listIds, "testList2")).to.be.ok()
+        
     end)
     
 end
