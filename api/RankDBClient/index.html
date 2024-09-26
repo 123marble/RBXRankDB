@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v2.3.1">
 <title data-rh="true">RankDBClient | RBXRankDB</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://123marble.github.io/RBXRankDB/api/RankDBClient"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docusaurus_tag" content="default"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docsearch:docusaurus_tag" content="default"><meta data-rh="true" property="og:title" content="RankDBClient | RBXRankDB"><link data-rh="true" rel="canonical" href="https://123marble.github.io/RBXRankDB/api/RankDBClient"><link data-rh="true" rel="alternate" href="https://123marble.github.io/RBXRankDB/api/RankDBClient" hreflang="en"><link data-rh="true" rel="alternate" href="https://123marble.github.io/RBXRankDB/api/RankDBClient" hreflang="x-default"><link rel="stylesheet" href="/RBXRankDB/assets/css/styles.19a5646f.css">
-<link rel="preload" href="/RBXRankDB/assets/js/runtime~main.90a1399a.js" as="script">
-<link rel="preload" href="/RBXRankDB/assets/js/main.95345dcc.js" as="script">
+<link rel="preload" href="/RBXRankDB/assets/js/runtime~main.7220f0ad.js" as="script">
+<link rel="preload" href="/RBXRankDB/assets/js/main.2184a0c4.js" as="script">
 </head>
 <body class="navigation-with-keyboard">
 <script>!function(){function e(e){document.documentElement.setAttribute("data-theme",e)}var t=function(){var e=null;try{e=localStorage.getItem("theme")}catch(e){}return e}();null!==t?e(t):window.matchMedia("(prefers-color-scheme: dark)").matches?e("dark"):(window.matchMedia("(prefers-color-scheme: light)").matches,e("light"))}()</script><div id="__docusaurus">
@@ -27,7 +27,11 @@
 <p>The response from the API</p>
 </span></span></div><div>
 <p>Sends a request to the RankDB API.</p>
-</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="createList"><code style="text-decoration:none">createList</code><a href="#createList" class="hash-link" aria-label="Direct link to createList" title="Direct link to createList">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/123marble/RBXRankDB/blob/main/src/rbxRankDB/init.lua#L122"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RankDBClient<!-- -->:</code><code class="green_DgR4">createList</code><code>(</code><div class="inset_uKQm"><div><code>listId<!-- -->: </code><code class="blue_P4bS">string</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
+</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="getAllListIds"><code style="text-decoration:none">getAllListIds</code><a href="#getAllListIds" class="hash-link" aria-label="Direct link to getAllListIds" title="Direct link to getAllListIds">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/123marble/RBXRankDB/blob/main/src/rbxRankDB/init.lua#L117"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RankDBClient<!-- -->:</code><code class="green_DgR4">getAllListIds</code><code>(</code><code>limit<!-- -->: </code><code class="blue_P4bS">number?</code><code>) → </code><code class="purple_ieR2">{</code><code class="blue_P4bS">string</code><code class="purple_ieR2">}</code><span class="inlineDescription_G7Er">-- <span>
+<p>An array of list IDs</p>
+</span></span></div><div>
+<p>Retrieves all list IDs from the RankDB.</p>
+</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="createList"><code style="text-decoration:none">createList</code><a href="#createList" class="hash-link" aria-label="Direct link to createList" title="Direct link to createList">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/123marble/RBXRankDB/blob/main/src/rbxRankDB/init.lua#L138"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RankDBClient<!-- -->:</code><code class="green_DgR4">createList</code><code>(</code><div class="inset_uKQm"><div><code>listId<!-- -->: </code><code class="blue_P4bS">string</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
 <p>The ID of the list to create</p>
 </span></span></div><div><code>set<!-- -->: </code><code class="blue_P4bS">string?</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
 <p>The set to use (default: "default")</p>
@@ -41,19 +45,19 @@
 <p>True if the list was created, false if it already exists</p>
 </span></span></div><div>
 <p>Creates a new list in the RankDB.</p>
-</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="getListLength"><code style="text-decoration:none">getListLength</code><a href="#getListLength" class="hash-link" aria-label="Direct link to getListLength" title="Direct link to getListLength">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/123marble/RBXRankDB/blob/main/src/rbxRankDB/init.lua#L161"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RankDBClient<!-- -->:</code><code class="green_DgR4">getListLength</code><code>(</code><div class="inset_uKQm"><div><code>listId<!-- -->: </code><code class="blue_P4bS">string</code><span class="inlineDescription_G7Er">-- <span>
+</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="getListLength"><code style="text-decoration:none">getListLength</code><a href="#getListLength" class="hash-link" aria-label="Direct link to getListLength" title="Direct link to getListLength">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/123marble/RBXRankDB/blob/main/src/rbxRankDB/init.lua#L177"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RankDBClient<!-- -->:</code><code class="green_DgR4">getListLength</code><code>(</code><div class="inset_uKQm"><div><code>listId<!-- -->: </code><code class="blue_P4bS">string</code><span class="inlineDescription_G7Er">-- <span>
 <p>The ID of the list</p>
 </span></span></div></div><code>) → </code><code class="blue_P4bS">number</code><span class="inlineDescription_G7Er">-- <span>
 <p>The number of elements in the list</p>
 </span></span></div><div>
 <p>Gets the length of a list.</p>
-</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="deleteList"><code style="text-decoration:none">deleteList</code><a href="#deleteList" class="hash-link" aria-label="Direct link to deleteList" title="Direct link to deleteList">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/123marble/RBXRankDB/blob/main/src/rbxRankDB/init.lua#L171"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RankDBClient<!-- -->:</code><code class="green_DgR4">deleteList</code><code>(</code><div class="inset_uKQm"><div><code>listId<!-- -->: </code><code class="blue_P4bS">string</code><span class="inlineDescription_G7Er">-- <span>
+</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="deleteList"><code style="text-decoration:none">deleteList</code><a href="#deleteList" class="hash-link" aria-label="Direct link to deleteList" title="Direct link to deleteList">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/123marble/RBXRankDB/blob/main/src/rbxRankDB/init.lua#L187"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RankDBClient<!-- -->:</code><code class="green_DgR4">deleteList</code><code>(</code><div class="inset_uKQm"><div><code>listId<!-- -->: </code><code class="blue_P4bS">string</code><span class="inlineDescription_G7Er">-- <span>
 <p>The ID of the list to delete</p>
 </span></span></div></div><code>) → </code><code class="blue_P4bS">boolean</code><span class="inlineDescription_G7Er">-- <span>
 <p>True if the list was deleted, false if it was not found</p>
 </span></span></div><div>
 <p>Deletes a list from the RankDB.</p>
-</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="getElement"><code style="text-decoration:none">getElement</code><a href="#getElement" class="hash-link" aria-label="Direct link to getElement" title="Direct link to getElement">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/123marble/RBXRankDB/blob/main/src/rbxRankDB/init.lua#L181"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RankDBClient<!-- -->:</code><code class="green_DgR4">getElement</code><code>(</code><div class="inset_uKQm"><div><code>listId<!-- -->: </code><code class="blue_P4bS">string</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
+</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="getElement"><code style="text-decoration:none">getElement</code><a href="#getElement" class="hash-link" aria-label="Direct link to getElement" title="Direct link to getElement">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/123marble/RBXRankDB/blob/main/src/rbxRankDB/init.lua#L197"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RankDBClient<!-- -->:</code><code class="green_DgR4">getElement</code><code>(</code><div class="inset_uKQm"><div><code>listId<!-- -->: </code><code class="blue_P4bS">string</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
 <p>The ID of the list</p>
 </span></span></div><div><code>elementId<!-- -->: </code><code class="blue_P4bS">number</code><span class="inlineDescription_G7Er">-- <span>
 <p>The ID of the element</p>
@@ -61,7 +65,7 @@
 <p>The element data</p>
 </span></span></div><div>
 <p>Gets an element from a list.</p>
-</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="updateElement"><code style="text-decoration:none">updateElement</code><a href="#updateElement" class="hash-link" aria-label="Direct link to updateElement" title="Direct link to updateElement">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/123marble/RBXRankDB/blob/main/src/rbxRankDB/init.lua#L226"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RankDBClient<!-- -->:</code><code class="green_DgR4">updateElement</code><code>(</code><div class="inset_uKQm"><div><code>listId<!-- -->: </code><code class="blue_P4bS">string</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
+</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="updateElement"><code style="text-decoration:none">updateElement</code><a href="#updateElement" class="hash-link" aria-label="Direct link to updateElement" title="Direct link to updateElement">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/123marble/RBXRankDB/blob/main/src/rbxRankDB/init.lua#L242"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RankDBClient<!-- -->:</code><code class="green_DgR4">updateElement</code><code>(</code><div class="inset_uKQm"><div><code>listId<!-- -->: </code><code class="blue_P4bS">string</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
 <p>The ID of the list</p>
 </span></span></div><div><code>element<!-- -->: </code><code class="blue_P4bS"><a style="text-decoration:underline;color:inherit" href="/RBXRankDB/api/RankDBClient#element">element</a></code><span class="inlineDescription_G7Er">-- <span>
 <p>The element to update</p>
@@ -69,7 +73,7 @@
 <p>The result of the update operation</p>
 </span></span></div><div>
 <p>Updates an element in a list.</p>
-</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="updateMultiElements"><code style="text-decoration:none">updateMultiElements</code><a href="#updateMultiElements" class="hash-link" aria-label="Direct link to updateMultiElements" title="Direct link to updateMultiElements">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/123marble/RBXRankDB/blob/main/src/rbxRankDB/init.lua#L247"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RankDBClient<!-- -->:</code><code class="green_DgR4">updateMultiElements</code><code>(</code><div class="inset_uKQm"><div><code>listId<!-- -->: </code><code class="blue_P4bS">string</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
+</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="updateMultiElements"><code style="text-decoration:none">updateMultiElements</code><a href="#updateMultiElements" class="hash-link" aria-label="Direct link to updateMultiElements" title="Direct link to updateMultiElements">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/123marble/RBXRankDB/blob/main/src/rbxRankDB/init.lua#L263"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RankDBClient<!-- -->:</code><code class="green_DgR4">updateMultiElements</code><code>(</code><div class="inset_uKQm"><div><code>listId<!-- -->: </code><code class="blue_P4bS">string</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
 <p>The ID of the list</p>
 </span></span></div><div><code>elements<!-- -->: </code><code class="purple_ieR2">{</code><code class="blue_P4bS"><a style="text-decoration:underline;color:inherit" href="/RBXRankDB/api/RankDBClient#element">element</a></code><code class="purple_ieR2">}</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
 <p>The elements to update</p>
@@ -89,7 +93,7 @@
     <p>This method does not return previous rank or score because the API does not support it.</p>
   </div>
 </div>
-</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="deleteElement"><code style="text-decoration:none">deleteElement</code><a href="#deleteElement" class="hash-link" aria-label="Direct link to deleteElement" title="Direct link to deleteElement">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/123marble/RBXRankDB/blob/main/src/rbxRankDB/init.lua#L279"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RankDBClient<!-- -->:</code><code class="green_DgR4">deleteElement</code><code>(</code><div class="inset_uKQm"><div><code>listId<!-- -->: </code><code class="blue_P4bS">string</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
+</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="deleteElement"><code style="text-decoration:none">deleteElement</code><a href="#deleteElement" class="hash-link" aria-label="Direct link to deleteElement" title="Direct link to deleteElement">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/123marble/RBXRankDB/blob/main/src/rbxRankDB/init.lua#L295"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RankDBClient<!-- -->:</code><code class="green_DgR4">deleteElement</code><code>(</code><div class="inset_uKQm"><div><code>listId<!-- -->: </code><code class="blue_P4bS">string</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
 <p>The ID of the list</p>
 </span></span></div><div><code>elementId<!-- -->: </code><code class="blue_P4bS">number</code><span class="inlineDescription_G7Er">-- <span>
 <p>The ID of the element to delete</p>
@@ -97,7 +101,7 @@
 <p>True if the element was deleted, false otherwise</p>
 </span></span></div><div>
 <p>Deletes an element from a list.</p>
-</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="getRankRange"><code style="text-decoration:none">getRankRange</code><a href="#getRankRange" class="hash-link" aria-label="Direct link to getRankRange" title="Direct link to getRankRange">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/123marble/RBXRankDB/blob/main/src/rbxRankDB/init.lua#L290"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RankDBClient<!-- -->:</code><code class="green_DgR4">getRankRange</code><code>(</code><div class="inset_uKQm"><div><code>listId<!-- -->: </code><code class="blue_P4bS">string</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
+</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="getRankRange"><code style="text-decoration:none">getRankRange</code><a href="#getRankRange" class="hash-link" aria-label="Direct link to getRankRange" title="Direct link to getRankRange">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/123marble/RBXRankDB/blob/main/src/rbxRankDB/init.lua#L306"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RankDBClient<!-- -->:</code><code class="green_DgR4">getRankRange</code><code>(</code><div class="inset_uKQm"><div><code>listId<!-- -->: </code><code class="blue_P4bS">string</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
 <p>The ID of the list</p>
 </span></span></div><div><code>rank<!-- -->: </code><code class="blue_P4bS">number</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
 <p>Get ranks >= this value</p>
@@ -107,13 +111,13 @@
 <p>An array of elements in the specified range</p>
 </span></span></div><div>
 <p>Gets a range of elements from a list based on rank.</p>
-</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="_constructElementBodyFromElement"><code style="text-decoration:none">_constructElementBodyFromElement</code><a href="#_constructElementBodyFromElement" class="hash-link" aria-label="Direct link to _constructElementBodyFromElement" title="Direct link to _constructElementBodyFromElement">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/123marble/RBXRankDB/blob/main/src/rbxRankDB/init.lua#L313"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RankDBClient<!-- -->:</code><code class="green_DgR4">_constructElementBodyFromElement</code><code>(</code><div class="inset_uKQm"><div><code>element<!-- -->: </code><code class="blue_P4bS"><a style="text-decoration:underline;color:inherit" href="/RBXRankDB/api/RankDBClient#element">element</a></code><span class="inlineDescription_G7Er">-- <span>
+</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="_constructElementBodyFromElement"><code style="text-decoration:none">_constructElementBodyFromElement</code><a href="#_constructElementBodyFromElement" class="hash-link" aria-label="Direct link to _constructElementBodyFromElement" title="Direct link to _constructElementBodyFromElement">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/123marble/RBXRankDB/blob/main/src/rbxRankDB/init.lua#L329"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RankDBClient<!-- -->:</code><code class="green_DgR4">_constructElementBodyFromElement</code><code>(</code><div class="inset_uKQm"><div><code>element<!-- -->: </code><code class="blue_P4bS"><a style="text-decoration:underline;color:inherit" href="/RBXRankDB/api/RankDBClient#element">element</a></code><span class="inlineDescription_G7Er">-- <span>
 <p>The element to construct the body from</p>
 </span></span></div></div><code>) → </code><code class="blue_P4bS">table</code><span class="inlineDescription_G7Er">-- <span>
 <p>The constructed element body</p>
 </span></span></div><div>
 <p>Constructs the element body for API requests from an element object.</p>
-</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="_constructUpdateElementResult"><code style="text-decoration:none">_constructUpdateElementResult</code><a href="#_constructUpdateElementResult" class="hash-link" aria-label="Direct link to _constructUpdateElementResult" title="Direct link to _constructUpdateElementResult">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/123marble/RBXRankDB/blob/main/src/rbxRankDB/init.lua#L327"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RankDBClient<!-- -->:</code><code class="green_DgR4">_constructUpdateElementResult</code><code>(</code><div class="inset_uKQm"><div><code>result<!-- -->: </code><code class="blue_P4bS">table</code><span class="inlineDescription_G7Er">-- <span>
+</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="_constructUpdateElementResult"><code style="text-decoration:none">_constructUpdateElementResult</code><a href="#_constructUpdateElementResult" class="hash-link" aria-label="Direct link to _constructUpdateElementResult" title="Direct link to _constructUpdateElementResult">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/123marble/RBXRankDB/blob/main/src/rbxRankDB/init.lua#L343"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RankDBClient<!-- -->:</code><code class="green_DgR4">_constructUpdateElementResult</code><code>(</code><div class="inset_uKQm"><div><code>result<!-- -->: </code><code class="blue_P4bS">table</code><span class="inlineDescription_G7Er">-- <span>
 <p>The API response</p>
 </span></span></div></div><code>) → </code><code class="blue_P4bS"><a style="text-decoration:underline;color:inherit" href="/RBXRankDB/api/RankDBClient#updateElementResult">updateElementResult</a></code><span class="inlineDescription_G7Er">-- <span>
 <p>The constructed update element result</p>
@@ -181,6 +185,28 @@
             }
         },
         {
+            &quot;name&quot;: &quot;getAllListIds&quot;,
+            &quot;desc&quot;: &quot;Retrieves all list IDs from the RankDB.&quot;,
+            &quot;params&quot;: [
+                {
+                    &quot;name&quot;: &quot;limit&quot;,
+                    &quot;desc&quot;: &quot;&quot;,
+                    &quot;lua_type&quot;: &quot;number?&quot;
+                }
+            ],
+            &quot;returns&quot;: [
+                {
+                    &quot;desc&quot;: &quot;An array of list IDs&quot;,
+                    &quot;lua_type&quot;: &quot;{string}&quot;
+                }
+            ],
+            &quot;function_type&quot;: &quot;method&quot;,
+            &quot;source&quot;: {
+                &quot;line&quot;: 117,
+                &quot;path&quot;: &quot;src/rbxRankDB/init.lua&quot;
+            }
+        },
+        {
             &quot;name&quot;: &quot;createList&quot;,
             &quot;desc&quot;: &quot;Creates a new list in the RankDB.&quot;,
             &quot;params&quot;: [
@@ -218,7 +244,7 @@
             ],
             &quot;function_type&quot;: &quot;method&quot;,
             &quot;source&quot;: {
-                &quot;line&quot;: 122,
+                &quot;line&quot;: 138,
                 &quot;path&quot;: &quot;src/rbxRankDB/init.lua&quot;
             }
         },
@@ -240,7 +266,7 @@
             ],
             &quot;function_type&quot;: &quot;method&quot;,
             &quot;source&quot;: {
-                &quot;line&quot;: 161,
+                &quot;line&quot;: 177,
                 &quot;path&quot;: &quot;src/rbxRankDB/init.lua&quot;
             }
         },
@@ -262,7 +288,7 @@
             ],
             &quot;function_type&quot;: &quot;method&quot;,
             &quot;source&quot;: {
-                &quot;line&quot;: 171,
+                &quot;line&quot;: 187,
                 &quot;path&quot;: &quot;src/rbxRankDB/init.lua&quot;
             }
         },
@@ -289,7 +315,7 @@
             ],
             &quot;function_type&quot;: &quot;method&quot;,
             &quot;source&quot;: {
-                &quot;line&quot;: 181,
+                &quot;line&quot;: 197,
                 &quot;path&quot;: &quot;src/rbxRankDB/init.lua&quot;
             }
         },
@@ -316,7 +342,7 @@
             ],
             &quot;function_type&quot;: &quot;method&quot;,
             &quot;source&quot;: {
-                &quot;line&quot;: 226,
+                &quot;line&quot;: 242,
                 &quot;path&quot;: &quot;src/rbxRankDB/init.lua&quot;
             }
         },
@@ -348,7 +374,7 @@
             ],
             &quot;function_type&quot;: &quot;method&quot;,
             &quot;source&quot;: {
-                &quot;line&quot;: 247,
+                &quot;line&quot;: 263,
                 &quot;path&quot;: &quot;src/rbxRankDB/init.lua&quot;
             }
         },
@@ -375,7 +401,7 @@
             ],
             &quot;function_type&quot;: &quot;method&quot;,
             &quot;source&quot;: {
-                &quot;line&quot;: 279,
+                &quot;line&quot;: 295,
                 &quot;path&quot;: &quot;src/rbxRankDB/init.lua&quot;
             }
         },
@@ -407,7 +433,7 @@
             ],
             &quot;function_type&quot;: &quot;method&quot;,
             &quot;source&quot;: {
-                &quot;line&quot;: 290,
+                &quot;line&quot;: 306,
                 &quot;path&quot;: &quot;src/rbxRankDB/init.lua&quot;
             }
         },
@@ -429,7 +455,7 @@
             ],
             &quot;function_type&quot;: &quot;method&quot;,
             &quot;source&quot;: {
-                &quot;line&quot;: 313,
+                &quot;line&quot;: 329,
                 &quot;path&quot;: &quot;src/rbxRankDB/init.lua&quot;
             }
         },
@@ -451,7 +477,7 @@
             ],
             &quot;function_type&quot;: &quot;method&quot;,
             &quot;source&quot;: {
-                &quot;line&quot;: 327,
+                &quot;line&quot;: 343,
                 &quot;path&quot;: &quot;src/rbxRankDB/init.lua&quot;
             }
         }
@@ -519,8 +545,8 @@
         &quot;line&quot;: 7,
         &quot;path&quot;: &quot;src/rbxRankDB/init.lua&quot;
     }
-}</pre></details></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#types" class="table-of-contents__link toc-highlight">Types</a><ul><li><a href="#element" class="table-of-contents__link toc-highlight">element</a></li><li><a href="#getElementResult" class="table-of-contents__link toc-highlight">getElementResult</a></li><li><a href="#getMultiElementsResult" class="table-of-contents__link toc-highlight">getMultiElementsResult</a></li><li><a href="#shiftedBoundary" class="table-of-contents__link toc-highlight">shiftedBoundary</a></li><li><a href="#updateElementResult" class="table-of-contents__link toc-highlight">updateElementResult</a></li><li><a href="#updateMultiElementsResult" class="table-of-contents__link toc-highlight">updateMultiElementsResult</a></li></ul></li><li><a href="#properties" class="table-of-contents__link toc-highlight">Properties</a></li><li><a href="#functions" class="table-of-contents__link toc-highlight">Functions</a><ul><li><a href="#_constructElementBodyFromElement" class="table-of-contents__link toc-highlight">:_constructElementBodyFromElement</a></li><li><a href="#_constructUpdateElementResult" class="table-of-contents__link toc-highlight">:_constructUpdateElementResult</a></li><li><a href="#createList" class="table-of-contents__link toc-highlight">:createList</a></li><li><a href="#deleteElement" class="table-of-contents__link toc-highlight">:deleteElement</a></li><li><a href="#deleteList" class="table-of-contents__link toc-highlight">:deleteList</a></li><li><a href="#getElement" class="table-of-contents__link toc-highlight">:getElement</a></li><li><a href="#getListLength" class="table-of-contents__link toc-highlight">:getListLength</a></li><li><a href="#getRankRange" class="table-of-contents__link toc-highlight">:getRankRange</a></li><li><a href="#request" class="table-of-contents__link toc-highlight">:request</a></li><li><a href="#updateElement" class="table-of-contents__link toc-highlight">:updateElement</a></li><li><a href="#updateMultiElements" class="table-of-contents__link toc-highlight">:updateMultiElements</a></li><li><a href="#new" class="table-of-contents__link toc-highlight">.new</a></li></ul></li></ul></div></div></div></div></main></div></div><footer class="footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2021 AuthorName. Built with Moonwave and Docusaurus</div></div></div></footer></div>
-<script src="/RBXRankDB/assets/js/runtime~main.90a1399a.js"></script>
-<script src="/RBXRankDB/assets/js/main.95345dcc.js"></script>
+}</pre></details></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#types" class="table-of-contents__link toc-highlight">Types</a><ul><li><a href="#element" class="table-of-contents__link toc-highlight">element</a></li><li><a href="#getElementResult" class="table-of-contents__link toc-highlight">getElementResult</a></li><li><a href="#getMultiElementsResult" class="table-of-contents__link toc-highlight">getMultiElementsResult</a></li><li><a href="#shiftedBoundary" class="table-of-contents__link toc-highlight">shiftedBoundary</a></li><li><a href="#updateElementResult" class="table-of-contents__link toc-highlight">updateElementResult</a></li><li><a href="#updateMultiElementsResult" class="table-of-contents__link toc-highlight">updateMultiElementsResult</a></li></ul></li><li><a href="#properties" class="table-of-contents__link toc-highlight">Properties</a></li><li><a href="#functions" class="table-of-contents__link toc-highlight">Functions</a><ul><li><a href="#_constructElementBodyFromElement" class="table-of-contents__link toc-highlight">:_constructElementBodyFromElement</a></li><li><a href="#_constructUpdateElementResult" class="table-of-contents__link toc-highlight">:_constructUpdateElementResult</a></li><li><a href="#createList" class="table-of-contents__link toc-highlight">:createList</a></li><li><a href="#deleteElement" class="table-of-contents__link toc-highlight">:deleteElement</a></li><li><a href="#deleteList" class="table-of-contents__link toc-highlight">:deleteList</a></li><li><a href="#getAllListIds" class="table-of-contents__link toc-highlight">:getAllListIds</a></li><li><a href="#getElement" class="table-of-contents__link toc-highlight">:getElement</a></li><li><a href="#getListLength" class="table-of-contents__link toc-highlight">:getListLength</a></li><li><a href="#getRankRange" class="table-of-contents__link toc-highlight">:getRankRange</a></li><li><a href="#request" class="table-of-contents__link toc-highlight">:request</a></li><li><a href="#updateElement" class="table-of-contents__link toc-highlight">:updateElement</a></li><li><a href="#updateMultiElements" class="table-of-contents__link toc-highlight">:updateMultiElements</a></li><li><a href="#new" class="table-of-contents__link toc-highlight">.new</a></li></ul></li></ul></div></div></div></div></main></div></div><footer class="footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2021 AuthorName. Built with Moonwave and Docusaurus</div></div></div></footer></div>
+<script src="/RBXRankDB/assets/js/runtime~main.7220f0ad.js"></script>
+<script src="/RBXRankDB/assets/js/main.2184a0c4.js"></script>
 </body>
 </html>
