@@ -1,5 +1,5 @@
 {
-    "name": "RBXRankDB",
+    "name": "rbxRankDB",
     "tree": {
       "$className": "DataModel",
       "ServerScriptService": {

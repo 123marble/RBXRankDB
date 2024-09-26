@@ -1,10 +1,10 @@
 [package]
 name = "123marble-rbx/rbxrankdb"
-version = "0.0.1"
+version = "0.0.2"
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 license = "MIT OR Apache-2.0"
-exclude = ["benchmark", "build", "testRunner.server.lua", "src/tests"]
+exclude = ["benchmark", "build", "testRunner.server.lua", "src/tests", "dev.project.json"]
 
 [dependencies]
 testez = "roblox/testez@0.4.1"

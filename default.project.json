@@ -1,6 +1,6 @@
 {
-  "name": "RBXRankDB",
+  "name": "rbxRankDB",
   "tree": {
-    "$path": "src/RankStore"
+    "$path": "src/rbxRankDB"
   }
 }
