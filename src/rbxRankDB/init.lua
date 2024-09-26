@@ -283,12 +283,12 @@ end
 --[=[
 Gets a range of elements from a list based on rank.
 @param listId string -- The ID of the list
-@param rank number -- The starting rank
+@param rank number -- Get ranks >= this value
 @param limit number -- The number of elements to retrieve
 @return {getElementResult} -- An array of elements in the specified range
 ]=]
 function RankDBClient:getRankRange(listId: string, rank: number, limit: number): {getElementResult}
-    local query = string.format("?from_top=%d&limit=%d", rank, limit)
+    local query = string.format("?from_top=%d&limit=%d", rank - 1, limit)
     local result = self:request("GET", "/lists/" .. listId .. "/range" .. query)
     
     local elements = {}
