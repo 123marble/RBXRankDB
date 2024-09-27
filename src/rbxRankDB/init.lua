@@ -22,7 +22,7 @@ export type getMultiElementsResult = {
     notFound : {number}
 }
 
---- @type updateElementResult {id: number, prevRank: number, newRank: number, prevScore: number, newScore: number, shiftedBoundaries: {shiftedBoundary}}
+--- @type updateElementResult {id: number, prevRank: number, newRank: number, prevScore: number, newScore: number, tieBreaker: number, shiftedBoundaries: {shiftedBoundary}}
 --- @within RankDBClient
 export type updateElementResult = {
     id : number,
@@ -30,6 +30,7 @@ export type updateElementResult = {
     newRank : number,
     prevScore : number,
     newScore : number,
+    tieBreaker : number,
     shiftedBoundaries : {shiftedBoundary}
 }
 
@@ -355,6 +356,7 @@ function RankDBClient:_constructUpdateElementResult(result: table): updateElemen
 		newRank = (self.ascending and result.from_bottom or result.from_top) + 1,
 		prevScore = prevScore,
 		newScore = tonumber(result.score),
+		tieBreaker = tonumber(result.tie_breaker),
 		shiftedBoundaries = #shiftedBoundaries > 0 and shiftedBoundaries or nil
 	}
 end
@@ -364,7 +366,7 @@ function RankDBClient:_getShiftedBoundariesFromResult(result : table) : {shifted
     if result.shifted_boundaries then
         for _, boundary in ipairs(result.shifted_boundaries) do
             table.insert(shiftedBoundaries, {
-                id = boundary.id,
+                id = boundary.new_id,
                 prevRank = tonumber(boundary.prev_from_top) + 1, -- todo: shifted boundaries only works with descending
                 newRank = tonumber(boundary.new_from_top) + 1,     -- should update rankDB to return correct from_bottom as well in future.
                 prevScore = tonumber(boundary.prev_score),
