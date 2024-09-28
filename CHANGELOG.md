@@ -1,10 +1,12 @@
 # CHANGELOG.md
 
+## 0.0.8 (2024-09-28)
+- Added `rbxRankDB:getElementInLists` method to get element from multiple lists.
+
 ## 0.0.7 (2024-09-25)
 Bug Fixes:
 - Returning `tieBreaker` in `updateElementResult`
 - Fixed shifted boundary IDs being always nil.
-
 
 ## 0.0.6 (2024-09-25)
 - Added `rbxRankDB:getAllListIds` method to get all list ids.

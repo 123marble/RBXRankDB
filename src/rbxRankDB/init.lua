@@ -323,6 +323,55 @@ function RankDBClient:getRankRange(listId: string, rank: number, limit: number):
 end
 
 --[=[
+Gets an element from multiple lists.
+@param elementId number -- The ID of the element
+@param allInSets {string}? -- An array of sets to search in
+@param allInLists {string}? -- An array of lists to search in
+@return {[string] : getElementResult} -- A dictionary of list IDs and their corresponding element data
+:::caution
+Unfortunately RankDB does not return the tieBreaker for these requests. Exepect getElementResult.tieBreaker to be nil.
+]=]
+function RankDBClient:getElementInLists(elementId : number, allInSets : {string}?, allInLists : {string}?) : {[string] : getElementResult}
+    local query = "?"
+    
+    if allInSets then
+        for _, set in ipairs(allInSets) do
+            query = query .. "all_in_sets=" .. HttpService:UrlEncode(set) .. "&"
+        end
+    end
+    
+    if allInLists then
+        for _, list in ipairs(allInLists) do
+            query = query .. "lists=" .. HttpService:UrlEncode(list) .. "&"
+        end
+    end
+    
+    -- Remove trailing '&' or '?' if present
+    query = query:gsub("[&?]$", "")
+    
+    local result = self:request("GET", "/xlist/elements/" .. tostring(elementId) .. query)
+    
+    local elements = {}
+    
+    if result.success then
+        for listId, listData in pairs(result.success) do
+            if listData.results and #listData.results > 0 then
+                local element = listData.results[1]
+                elements[listId] = {
+                    id = element.id,
+                    score = tonumber(element.score),
+                    tieBreaker = element.tie_breaker and tonumber(element.tie_breaker) or nil,
+                    extra = element.payload,
+                    rank = (self.ascending and element.from_bottom or element.from_top) + 1
+                }
+            end
+        end
+    end
+    
+    return elements
+end
+
+--[=[
 Constructs the element body for API requests from an element object.
 @param element element -- The element to construct the body from
 @return table -- The constructed element body

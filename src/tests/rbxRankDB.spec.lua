@@ -1,4 +1,3 @@
-
 local Util = require(script.Parent.util)
 
 return function()
@@ -33,6 +32,7 @@ return function()
             newRank = 1,
             prevScore = nil,
             newScore = 10,
+            tieBreaker = 0,  -- Added tieBreaker
         }
         expect(result).to.be.deepEqual(expected)
     end)
@@ -57,6 +57,7 @@ return function()
             newRank = 1,
             prevScore = nil,
             newScore = 10,
+            tieBreaker = 0,  -- Added tieBreaker
         }
         expect(result).to.be.deepEqual(expected)
 
@@ -67,6 +68,7 @@ return function()
             newRank = 2,
             prevScore = nil,
             newScore = 2,
+            tieBreaker = 0,  -- Added tieBreaker
         }
         expect(result).to.be.deepEqual(expected)
 
@@ -78,6 +80,7 @@ return function()
             newRank = 1,
             prevScore = nil,
             newScore = 20,
+            tieBreaker = 0,  -- Added tieBreaker
         }
         expect(result).to.be.deepEqual(expected)
     end)
@@ -104,6 +107,7 @@ return function()
             newRank = 1,
             prevScore = nil,
             newScore = 10,
+            tieBreaker = 0,  -- Added tieBreaker
         }
         expect(result).to.be.deepEqual(expected)
 
@@ -114,6 +118,7 @@ return function()
             newRank = 1,
             prevScore = 10,
             newScore = 1,
+            tieBreaker = 0,  -- Added tieBreaker
         }
         expect(result).to.be.deepEqual(expected)
     end)
@@ -135,6 +140,7 @@ return function()
                     newRank = 1,
                     prevScore = nil,
                     newScore = 30,
+                    tieBreaker = 0,
                 },
                 {
                     id = 2,
@@ -142,6 +148,7 @@ return function()
                     newRank = 2,
                     prevScore = nil,
                     newScore = 20,
+                    tieBreaker = 0,
                 },
                 {
                     id = 1,
@@ -149,6 +156,7 @@ return function()
                     newRank = 3,
                     prevScore = nil,
                     newScore = 10,
+                    tieBreaker = 0,
                 },
             },
             notFound = {},
@@ -200,12 +208,62 @@ return function()
         local _ = client:createList("testList1")
         local _ = client:createList("testList2")
 
-        local listIds = client:getAllListIds()
-        
+        local listIds = client:getAllListIds(1000)
+
         expect(type(listIds)).to.be.equal("table")
         expect(table.find(listIds, "testList1")).to.be.ok()
         expect(table.find(listIds, "testList2")).to.be.ok()
         
     end)
-    
+
+    it("should be able to get element from multiple lists", function()
+        client:deleteList("testMultiGet1")
+        client:deleteList("testMultiGet2")
+        client:deleteList("testMultiGet3")
+        local _ = client:createList("testMultiGet1")
+        local _ = client:createList("testMultiGet2")
+        local _ = client:createList("testMultiGet3")
+
+        client:updateElement("testMultiGet1", {id = 1, score = 100, tieBreaker = 0})
+        client:updateElement("testMultiGet2", {id = 1, score = 200, tieBreaker = 0})
+        client:updateElement("testMultiGet3", {id = 1, score = 300, tieBreaker = 0})
+        client:updateElement("testMultiGet2", {id = 2, score = 400, tieBreaker = 0})
+
+        -- Test getElementInLists
+        local result = client:getElementInLists(1, nil, {"testMultiGet1", "testMultiGet2", "testMultiGet3", "nonExistentList"})
+
+        -- Expected result
+        local expected = {
+            testMultiGet1 = {
+                id = 1,
+                score = 100,
+                rank = 1,
+                extra = nil,
+            },
+            testMultiGet2 = {
+                id = 1,
+                score = 200,
+                rank = 2,
+                extra = nil,
+            },
+            testMultiGet3 = {
+                id = 1,
+                score = 300,
+                rank = 1,
+                extra = nil,
+            },
+        }
+
+        expect(result).to.be.deepEqual(expected)
+
+        expect(result.nonExistentList).to.never.be.ok()
+
+        local resultWithSets = client:getElementInLists(1, {"testMultiGet1"}, {"testMultiGet2", "testMultiGet3"})
+        expect(resultWithSets).to.be.deepEqual({
+            testMultiGet2 = expected.testMultiGet2,
+            testMultiGet3 = expected.testMultiGet3,
+        })
+
+
+    end)
 end
