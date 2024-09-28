@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v2.3.1">
 <title data-rh="true">RankDBClient | RBXRankDB</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://123marble.github.io/RBXRankDB/api/RankDBClient"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docusaurus_tag" content="default"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docsearch:docusaurus_tag" content="default"><meta data-rh="true" property="og:title" content="RankDBClient | RBXRankDB"><link data-rh="true" rel="canonical" href="https://123marble.github.io/RBXRankDB/api/RankDBClient"><link data-rh="true" rel="alternate" href="https://123marble.github.io/RBXRankDB/api/RankDBClient" hreflang="en"><link data-rh="true" rel="alternate" href="https://123marble.github.io/RBXRankDB/api/RankDBClient" hreflang="x-default"><link rel="stylesheet" href="/RBXRankDB/assets/css/styles.19a5646f.css">
-<link rel="preload" href="/RBXRankDB/assets/js/runtime~main.562c2c44.js" as="script">
-<link rel="preload" href="/RBXRankDB/assets/js/main.833bf41a.js" as="script">
+<link rel="preload" href="/RBXRankDB/assets/js/runtime~main.b121d1a2.js" as="script">
+<link rel="preload" href="/RBXRankDB/assets/js/main.558edd4f.js" as="script">
 </head>
 <body class="navigation-with-keyboard">
 <script>!function(){function e(e){document.documentElement.setAttribute("data-theme",e)}var t=function(){var e=null;try{e=localStorage.getItem("theme")}catch(e){}return e}();null!==t?e(t):window.matchMedia("(prefers-color-scheme: dark)").matches?e("dark"):(window.matchMedia("(prefers-color-scheme: light)").matches,e("light"))}()</script><div id="__docusaurus">
@@ -111,13 +111,33 @@
 <p>An array of elements in the specified range</p>
 </span></span></div><div>
 <p>Gets a range of elements from a list based on rank.</p>
-</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="_constructElementBodyFromElement"><code style="text-decoration:none">_constructElementBodyFromElement</code><a href="#_constructElementBodyFromElement" class="hash-link" aria-label="Direct link to _constructElementBodyFromElement" title="Direct link to _constructElementBodyFromElement">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/123marble/RBXRankDB/blob/main/src/rbxRankDB/init.lua#L330"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RankDBClient<!-- -->:</code><code class="green_DgR4">_constructElementBodyFromElement</code><code>(</code><div class="inset_uKQm"><div><code>element<!-- -->: </code><code class="blue_P4bS"><a style="text-decoration:underline;color:inherit" href="/RBXRankDB/api/RankDBClient#element">element</a></code><span class="inlineDescription_G7Er">-- <span>
+</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="getElementInLists"><code style="text-decoration:none">getElementInLists</code><a href="#getElementInLists" class="hash-link" aria-label="Direct link to getElementInLists" title="Direct link to getElementInLists">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/123marble/RBXRankDB/blob/main/src/rbxRankDB/init.lua#L334"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RankDBClient<!-- -->:</code><code class="green_DgR4">getElementInLists</code><code>(</code><div class="inset_uKQm"><div><code>elementId<!-- -->: </code><code class="blue_P4bS">number</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
+<p>The ID of the element</p>
+</span></span></div><div><code>allInSets<!-- -->: </code><code class="purple_ieR2">{</code><code class="blue_P4bS">string</code><code class="purple_ieR2">}</code><code class="blue_P4bS">?</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
+<p>An array of sets to search in</p>
+</span></span></div><div><code>allInLists<!-- -->: </code><code class="purple_ieR2">{</code><code class="blue_P4bS">string</code><code class="purple_ieR2">}</code><code class="blue_P4bS">?</code><span class="inlineDescription_G7Er">-- <span>
+<p>An array of lists to search in</p>
+</span></span></div></div><code>) → </code><code class="purple_ieR2">{</code><span><code>[</code><code class="blue_P4bS">string</code><code>]</code></span><code>: </code><code class="blue_P4bS"><a style="text-decoration:underline;color:inherit" href="/RBXRankDB/api/RankDBClient#getElementResult">getElementResult</a></code><code class="purple_ieR2">}</code><span class="inlineDescription_G7Er">-- <span>
+<p>A dictionary of list IDs and their corresponding element data</p>
+</span></span></div><div>
+<p>Gets an element from multiple lists.</p>
+<div class="admonition admonition-caution alert alert--warning">
+  <div class="admonition-heading">
+    <h5><span class="admonition-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+          <path d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 0 0 0 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 0 0 .01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"></path>
+        </svg></span>caution</h5>
+  </div>
+  <div class="admonition-content">
+    <p>Unfortunately RankDB does not return the tieBreaker for these requests. Exepect getElementResult.tieBreaker to be nil.</p>
+  </div>
+</div>
+</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="_constructElementBodyFromElement"><code style="text-decoration:none">_constructElementBodyFromElement</code><a href="#_constructElementBodyFromElement" class="hash-link" aria-label="Direct link to _constructElementBodyFromElement" title="Direct link to _constructElementBodyFromElement">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/123marble/RBXRankDB/blob/main/src/rbxRankDB/init.lua#L379"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RankDBClient<!-- -->:</code><code class="green_DgR4">_constructElementBodyFromElement</code><code>(</code><div class="inset_uKQm"><div><code>element<!-- -->: </code><code class="blue_P4bS"><a style="text-decoration:underline;color:inherit" href="/RBXRankDB/api/RankDBClient#element">element</a></code><span class="inlineDescription_G7Er">-- <span>
 <p>The element to construct the body from</p>
 </span></span></div></div><code>) → </code><code class="blue_P4bS">table</code><span class="inlineDescription_G7Er">-- <span>
 <p>The constructed element body</p>
 </span></span></div><div>
 <p>Constructs the element body for API requests from an element object.</p>
-</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="_constructUpdateElementResult"><code style="text-decoration:none">_constructUpdateElementResult</code><a href="#_constructUpdateElementResult" class="hash-link" aria-label="Direct link to _constructUpdateElementResult" title="Direct link to _constructUpdateElementResult">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/123marble/RBXRankDB/blob/main/src/rbxRankDB/init.lua#L344"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RankDBClient<!-- -->:</code><code class="green_DgR4">_constructUpdateElementResult</code><code>(</code><div class="inset_uKQm"><div><code>result<!-- -->: </code><code class="blue_P4bS">table</code><span class="inlineDescription_G7Er">-- <span>
+</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="_constructUpdateElementResult"><code style="text-decoration:none">_constructUpdateElementResult</code><a href="#_constructUpdateElementResult" class="hash-link" aria-label="Direct link to _constructUpdateElementResult" title="Direct link to _constructUpdateElementResult">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/123marble/RBXRankDB/blob/main/src/rbxRankDB/init.lua#L393"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RankDBClient<!-- -->:</code><code class="green_DgR4">_constructUpdateElementResult</code><code>(</code><div class="inset_uKQm"><div><code>result<!-- -->: </code><code class="blue_P4bS">table</code><span class="inlineDescription_G7Er">-- <span>
 <p>The API response</p>
 </span></span></div></div><code>) → </code><code class="blue_P4bS"><a style="text-decoration:underline;color:inherit" href="/RBXRankDB/api/RankDBClient#updateElementResult">updateElementResult</a></code><span class="inlineDescription_G7Er">-- <span>
 <p>The constructed update element result</p>
@@ -438,6 +458,38 @@
             }
         },
         {
+            &quot;name&quot;: &quot;getElementInLists&quot;,
+            &quot;desc&quot;: &quot;Gets an element from multiple lists.\n:::caution\nUnfortunately RankDB does not return the tieBreaker for these requests. Exepect getElementResult.tieBreaker to be nil.&quot;,
+            &quot;params&quot;: [
+                {
+                    &quot;name&quot;: &quot;elementId&quot;,
+                    &quot;desc&quot;: &quot;The ID of the element&quot;,
+                    &quot;lua_type&quot;: &quot;number&quot;
+                },
+                {
+                    &quot;name&quot;: &quot;allInSets&quot;,
+                    &quot;desc&quot;: &quot;An array of sets to search in&quot;,
+                    &quot;lua_type&quot;: &quot;{string}?&quot;
+                },
+                {
+                    &quot;name&quot;: &quot;allInLists&quot;,
+                    &quot;desc&quot;: &quot;An array of lists to search in&quot;,
+                    &quot;lua_type&quot;: &quot;{string}?&quot;
+                }
+            ],
+            &quot;returns&quot;: [
+                {
+                    &quot;desc&quot;: &quot;A dictionary of list IDs and their corresponding element data&quot;,
+                    &quot;lua_type&quot;: &quot;{[string] : getElementResult}&quot;
+                }
+            ],
+            &quot;function_type&quot;: &quot;method&quot;,
+            &quot;source&quot;: {
+                &quot;line&quot;: 334,
+                &quot;path&quot;: &quot;src/rbxRankDB/init.lua&quot;
+            }
+        },
+        {
             &quot;name&quot;: &quot;_constructElementBodyFromElement&quot;,
             &quot;desc&quot;: &quot;Constructs the element body for API requests from an element object.&quot;,
             &quot;params&quot;: [
@@ -455,7 +507,7 @@
             ],
             &quot;function_type&quot;: &quot;method&quot;,
             &quot;source&quot;: {
-                &quot;line&quot;: 330,
+                &quot;line&quot;: 379,
                 &quot;path&quot;: &quot;src/rbxRankDB/init.lua&quot;
             }
         },
@@ -477,7 +529,7 @@
             ],
             &quot;function_type&quot;: &quot;method&quot;,
             &quot;source&quot;: {
-                &quot;line&quot;: 344,
+                &quot;line&quot;: 393,
                 &quot;path&quot;: &quot;src/rbxRankDB/init.lua&quot;
             }
         }
@@ -545,8 +597,8 @@
         &quot;line&quot;: 7,
         &quot;path&quot;: &quot;src/rbxRankDB/init.lua&quot;
     }
-}</pre></details></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#types" class="table-of-contents__link toc-highlight">Types</a><ul><li><a href="#element" class="table-of-contents__link toc-highlight">element</a></li><li><a href="#getElementResult" class="table-of-contents__link toc-highlight">getElementResult</a></li><li><a href="#getMultiElementsResult" class="table-of-contents__link toc-highlight">getMultiElementsResult</a></li><li><a href="#shiftedBoundary" class="table-of-contents__link toc-highlight">shiftedBoundary</a></li><li><a href="#updateElementResult" class="table-of-contents__link toc-highlight">updateElementResult</a></li><li><a href="#updateMultiElementsResult" class="table-of-contents__link toc-highlight">updateMultiElementsResult</a></li></ul></li><li><a href="#properties" class="table-of-contents__link toc-highlight">Properties</a></li><li><a href="#functions" class="table-of-contents__link toc-highlight">Functions</a><ul><li><a href="#_constructElementBodyFromElement" class="table-of-contents__link toc-highlight">:_constructElementBodyFromElement</a></li><li><a href="#_constructUpdateElementResult" class="table-of-contents__link toc-highlight">:_constructUpdateElementResult</a></li><li><a href="#createList" class="table-of-contents__link toc-highlight">:createList</a></li><li><a href="#deleteElement" class="table-of-contents__link toc-highlight">:deleteElement</a></li><li><a href="#deleteList" class="table-of-contents__link toc-highlight">:deleteList</a></li><li><a href="#getAllListIds" class="table-of-contents__link toc-highlight">:getAllListIds</a></li><li><a href="#getElement" class="table-of-contents__link toc-highlight">:getElement</a></li><li><a href="#getListLength" class="table-of-contents__link toc-highlight">:getListLength</a></li><li><a href="#getRankRange" class="table-of-contents__link toc-highlight">:getRankRange</a></li><li><a href="#request" class="table-of-contents__link toc-highlight">:request</a></li><li><a href="#updateElement" class="table-of-contents__link toc-highlight">:updateElement</a></li><li><a href="#updateMultiElements" class="table-of-contents__link toc-highlight">:updateMultiElements</a></li><li><a href="#new" class="table-of-contents__link toc-highlight">.new</a></li></ul></li></ul></div></div></div></div></main></div></div><footer class="footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2021 AuthorName. Built with Moonwave and Docusaurus</div></div></div></footer></div>
-<script src="/RBXRankDB/assets/js/runtime~main.562c2c44.js"></script>
-<script src="/RBXRankDB/assets/js/main.833bf41a.js"></script>
+}</pre></details></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#types" class="table-of-contents__link toc-highlight">Types</a><ul><li><a href="#element" class="table-of-contents__link toc-highlight">element</a></li><li><a href="#getElementResult" class="table-of-contents__link toc-highlight">getElementResult</a></li><li><a href="#getMultiElementsResult" class="table-of-contents__link toc-highlight">getMultiElementsResult</a></li><li><a href="#shiftedBoundary" class="table-of-contents__link toc-highlight">shiftedBoundary</a></li><li><a href="#updateElementResult" class="table-of-contents__link toc-highlight">updateElementResult</a></li><li><a href="#updateMultiElementsResult" class="table-of-contents__link toc-highlight">updateMultiElementsResult</a></li></ul></li><li><a href="#properties" class="table-of-contents__link toc-highlight">Properties</a></li><li><a href="#functions" class="table-of-contents__link toc-highlight">Functions</a><ul><li><a href="#_constructElementBodyFromElement" class="table-of-contents__link toc-highlight">:_constructElementBodyFromElement</a></li><li><a href="#_constructUpdateElementResult" class="table-of-contents__link toc-highlight">:_constructUpdateElementResult</a></li><li><a href="#createList" class="table-of-contents__link toc-highlight">:createList</a></li><li><a href="#deleteElement" class="table-of-contents__link toc-highlight">:deleteElement</a></li><li><a href="#deleteList" class="table-of-contents__link toc-highlight">:deleteList</a></li><li><a href="#getAllListIds" class="table-of-contents__link toc-highlight">:getAllListIds</a></li><li><a href="#getElement" class="table-of-contents__link toc-highlight">:getElement</a></li><li><a href="#getElementInLists" class="table-of-contents__link toc-highlight">:getElementInLists</a></li><li><a href="#getListLength" class="table-of-contents__link toc-highlight">:getListLength</a></li><li><a href="#getRankRange" class="table-of-contents__link toc-highlight">:getRankRange</a></li><li><a href="#request" class="table-of-contents__link toc-highlight">:request</a></li><li><a href="#updateElement" class="table-of-contents__link toc-highlight">:updateElement</a></li><li><a href="#updateMultiElements" class="table-of-contents__link toc-highlight">:updateMultiElements</a></li><li><a href="#new" class="table-of-contents__link toc-highlight">.new</a></li></ul></li></ul></div></div></div></div></main></div></div><footer class="footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2021 AuthorName. Built with Moonwave and Docusaurus</div></div></div></footer></div>
+<script src="/RBXRankDB/assets/js/runtime~main.b121d1a2.js"></script>
+<script src="/RBXRankDB/assets/js/main.558edd4f.js"></script>
 </body>
 </html>
